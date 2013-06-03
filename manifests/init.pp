@@ -41,7 +41,7 @@ class huskycode-vim( $user, $home_dir ) {
   package { 'vim':
     ensure => installed
   }
-  file { ["${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] : 
+  file { ["${home_dir}/.vim","${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] : 
     ensure => "directory",
     owner => $user
   }
@@ -61,6 +61,6 @@ class huskycode-vim( $user, $home_dir ) {
     ensure => installed,  
   }
 
-  Package['vim'] -> File["${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] -> Wget::Fetch["DownloadPathogen"] -> File["${home_dir}/.vim/autoload/pathogen.vim"] -> File["${home_dir}/.vimrc"]
+  Package['vim'] -> File["${home_dir}/.vim", "${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] -> Wget::Fetch["DownloadPathogen"] -> File["${home_dir}/.vim/autoload/pathogen.vim"] -> File["${home_dir}/.vimrc"]
 
 }
