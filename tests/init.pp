@@ -10,5 +10,7 @@
 #
 class { "huskycode-vim" :
   user => "vagrant",
-  home_dir => "/home/vagrant"
+  home_dir => "/home/vagrant",
+  plugin1_name => "nerdtree",
+  plugin1 => "https://github.com/scrooloose/nerdtree.git"
 }
