@@ -8,4 +8,7 @@
 #
 # Learn more about module testing here: http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-include huskycode-vim
+class { "huskycode-vim" :
+  user => "vagrant",
+  home_dir => "/home/vagrant"
+}
