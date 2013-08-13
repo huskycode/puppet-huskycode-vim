@@ -1,36 +1,40 @@
-class huskycode-vim( $user, $home_dir, $plugin1="NONE", $plugin1_name="NONE") {
+class vim($user, $home_dir) {
   include wget 
- 
-  package { 'vim':
-    ensure => installed
+
+  case $operatingsystem {
+    CentOS,RedHat: { $vim_package = 'vim-enhanced' }
+    default: { $vim_package = 'vim' }
   }
+
+  package { 'vim':
+    name   => $vim_package,
+    ensure => installed,
+  }
+
   file { ["${home_dir}/.vim","${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] : 
     ensure => "directory",
-    owner => $user
+    owner  => $user
   }
+
   wget::fetch { "DownloadPathogen":
-    source => "https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim",
+    source      => "https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim",
     destination => "${home_dir}/.vim/autoload/pathogen.vim",
-    verbose => true 
+    verbose     => true
   }
+
   file { "${home_dir}/.vim/autoload/pathogen.vim":
     owner => $user
   }
+
   file { "${home_dir}/.vimrc": 
-    owner => $user,
-    content => "execute pathogen#infect()\nsyntax on"
+    owner   => $user,
+    content => "execute pathogen#infect()\nsyntax on\ncall pathogen#helptags()\nfiletype plugin indent on\nhighlight comment ctermfg=darkgray\n:set bg=dark"
   }
-  
-  if $plugin1 != "NONE" and $plugin1_name != "NONE" {
-    vcsrepo { "${home_dir}/.vim/bundle/${plugin1_name}": 
-      ensure => present,
-      provider => git,
-      user => $user, 
-      source => $plugin1
-   }
-  } 
 
-
-  Package['vim'] -> File["${home_dir}/.vim", "${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] -> Wget::Fetch["DownloadPathogen"] -> File["${home_dir}/.vim/autoload/pathogen.vim"] -> File["${home_dir}/.vimrc"]
+  Package['vim'] 
+  -> File["${home_dir}/.vim", "${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] 
+  -> Wget::Fetch["DownloadPathogen"] 
+  -> File["${home_dir}/.vim/autoload/pathogen.vim"] 
+  -> File["${home_dir}/.vimrc"]
 
 }
