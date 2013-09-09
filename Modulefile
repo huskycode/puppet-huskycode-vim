@@ -1,5 +1,5 @@
 name    'huskycode-vim'
-version '0.0.1'
+version '0.0.2'
 source 'https://github.com/huskycode/puppet-huskycode-vim'
 author 'huskycode'
 license 'BSD License'
