@@ -12,11 +12,12 @@ Usage
 
     class { "vim": 
       user => "user",
-      homedir => "/home/user", 
-    } 
-
-    vim::plugin { "https://github.com/scrooloose/nerdtree.git": }
- 
+      home_dir => "/home/user",
+    } ->
+    vim::plugin { "nerdtree":
+      source => "https://github.com/scrooloose/nerdtree.git",
+    }
+    
 
 
 Contact
