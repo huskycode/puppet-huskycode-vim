@@ -28,7 +28,7 @@ class vim($user, $home_dir) {
 
   file { "${home_dir}/.vimrc": 
     owner   => $user,
-    content => "execute pathogen#infect()\nsyntax on\ncall pathogen#helptags()\nfiletype plugin indent on\nhighlight comment ctermfg=darkgray\n:set bg=dark"
+    content => "execute pathogen#infect()\ncall pathogen#helptags()"
   }
 
   Package['vim'] 
