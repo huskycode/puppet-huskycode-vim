@@ -26,15 +26,15 @@ class vim($user, $home_dir) {
     owner => $user
   }
 
-  file { "${home_dir}/.vimrc": 
+  file { "${home_dir}/.vimrc":
     owner   => $user,
     content => "execute pathogen#infect()\nsyntax on\ncall pathogen#helptags()\nfiletype plugin indent on\nhighlight comment ctermfg=darkgray\n:set bg=dark"
   }
 
-  Package['vim'] 
-  -> File["${home_dir}/.vim", "${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] 
-  -> Wget::Fetch["DownloadPathogen"] 
-  -> File["${home_dir}/.vim/autoload/pathogen.vim"] 
+  Package['vim']
+  -> File["${home_dir}/.vim/autoload"]
+  -> Wget::Fetch["DownloadPathogen"]
+  -> File["${home_dir}/.vim/autoload/pathogen.vim"]
   -> File["${home_dir}/.vimrc"]
 
 }
