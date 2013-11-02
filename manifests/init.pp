@@ -13,7 +13,13 @@ class vim($user, $home_dir) {
 
   file { ["${home_dir}/.vim","${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] : 
     ensure => 'directory',
-    owner  => $user
+    owner  => $user,
+  }
+
+  file { "${home_dir}/.vimrc.local" :
+    owner   => $user,
+    replace => false,
+    content => "\"Add here your custom options for vim, puppet will not override them\n",
   }
 
   wget::fetch { "DownloadPathogen":
@@ -46,6 +52,11 @@ class vim($user, $home_dir) {
   vim::rc { 'vimrc-pathogen':
     content => "execute pathogen#infect()\ncall pathogen#helptags()",
   }
+
+  vim::rc { 'vimrc-local':
+    content => "if filereadable(glob(\"~/.vimrc.local\"))\nsource ~/.vimrc.local\nendif",
+  }
+
   vim::rc { 'syntax on': }
   vim::rc { 'filetype plugin indent on': }
   vim::rc { 'highlight comment ctermfg=darkgray': }
