@@ -57,7 +57,7 @@ class vim($user, $home_dir) {
   }
 
   vim::rc { 'vimrc-local':
-    content => "if filereadable(glob(\"~/.vimrc.local\"))\nsource ~/.vimrc.local\nendif",
+    content => "if filereadable(glob(\"~/.vimrc.local\"))\n\tsource ~/.vimrc.local\nendif",
   }
 
   vim::rc { 'syntax on': }
