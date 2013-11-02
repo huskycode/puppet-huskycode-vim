@@ -3,6 +3,8 @@ VIM
 
 Install VIM with Pathogen.
 
+Manual config of vim can be done in ~/.vimrc.local
+
 License
 -------
 BSD License
@@ -13,11 +15,20 @@ Usage
     class { "vim": 
       user => "user",
       home_dir => "/home/user",
-    } ->
+    }
     vim::plugin { "nerdtree":
       source => "https://github.com/scrooloose/nerdtree.git",
     }
+
+    vim::rc { 'syntax on': }
     
+    vim::plugin { 'solarized' :
+      source => 'https://github.com/altercation/vim-colors-solarized.git',
+    }
+    vim::rc { 'solarized' :
+      content => "set background=dark\ncolorscheme solarized"
+    }
+
 
 
 Contact
