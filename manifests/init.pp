@@ -1,6 +1,9 @@
 class vim($user, $home_dir) {
   include wget 
 
+  validate_string($user)
+  validate_absolute_path($home_dir)
+
   case $operatingsystem {
     CentOS,RedHat: { $vim_package = 'vim-enhanced' }
     default: { $vim_package = 'vim' }
