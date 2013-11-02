@@ -14,7 +14,7 @@ class vim($user, $home_dir) {
     ensure => installed,
   }
 
-  file { ["${home_dir}/.vim","${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] : 
+  file { ["${home_dir}/.vim", "${home_dir}/.vim/autoload", "${home_dir}/.vim/bundle"] : 
     ensure => 'directory',
     owner  => $user,
   }
@@ -25,8 +25,8 @@ class vim($user, $home_dir) {
     content => "\"Add here your custom options for vim, puppet will not override them\n",
   }
 
-  wget::fetch { "DownloadPathogen":
-    source      => "https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim",
+  wget::fetch { 'DownloadPathogen':
+    source      => 'https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim',
     destination => "${home_dir}/.vim/autoload/pathogen.vim",
     verbose     => true
   }
