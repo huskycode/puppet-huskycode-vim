@@ -1,4 +1,4 @@
-class vim($user, $home_dir) {
+class vim($user, $home_dir, $group = 'root') {
   include wget 
 
   validate_string($user)
@@ -38,7 +38,7 @@ class vim($user, $home_dir) {
   concat { 'vimrc':
     path  => "${home_dir}/.vimrc",
     owner => $user,
-    group => 'root',
+    group => $group,
     mode  => '0664',
   }
 
