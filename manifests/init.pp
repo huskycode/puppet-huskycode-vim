@@ -1,20 +1,24 @@
 class vim($user, $home_dir) {
-  include wget 
+  include wget
 
   validate_string($user)
   validate_absolute_path($home_dir)
 
-  case $operatingsystem {
-    CentOS,RedHat: { $vim_package = 'vim-enhanced' }
+  case $::osfamily {
+    RedHat: { $vim_package = 'vim-enhanced' }
     default: { $vim_package = 'vim' }
   }
 
   package { 'vim':
-    name   => $vim_package,
     ensure => installed,
+    name   => $vim_package,
   }
 
-  file { ["${home_dir}/.vim", "${home_dir}/.vim/autoload", "${home_dir}/.vim/bundle"] : 
+  file { [
+    "${home_dir}/.vim",
+    "${home_dir}/.vim/autoload",
+    "${home_dir}/.vim/bundle",
+    ] :
     ensure => 'directory',
     owner  => $user,
   }
@@ -65,10 +69,14 @@ class vim($user, $home_dir) {
   vim::rc { 'highlight comment ctermfg=darkgray': }
   vim::rc { ':set bg=dark': }
 
-  Package['vim'] 
-  -> File["${home_dir}/.vim", "${home_dir}/.vim/autoload","${home_dir}/.vim/bundle"] 
-  -> Wget::Fetch["DownloadPathogen"] 
-  -> File["${home_dir}/.vim/autoload/pathogen.vim"] 
+  Package['vim']
+  -> File[
+    "${home_dir}/.vim",
+    "${home_dir}/.vim/autoload",
+    "${home_dir}/.vim/bundle"
+  ]
+  -> Wget::Fetch['DownloadPathogen']
+  -> File["${home_dir}/.vim/autoload/pathogen.vim"]
   -> Concat['vimrc']
 
 }
