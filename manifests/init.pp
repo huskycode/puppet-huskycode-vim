@@ -58,6 +58,7 @@ class vim($user, $home_dir) {
 
   vim::rc { 'vimrc-pathogen':
     content => "execute pathogen#infect()\ncall pathogen#helptags()",
+    order => 1,
   }
 
   vim::rc { 'vimrc-local':
