@@ -1,4 +1,4 @@
-define vim::rc ($content='', $order = '100')
+define vim::rc ($content='', $order = 75)
 {
   validate_string($content)
 
