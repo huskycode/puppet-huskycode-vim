@@ -1,7 +1,11 @@
 NAME=vim
 
+TEST_FILES = $(wildcard tests/*.pp)
+
 test: $(NAME)
-	puppet apply --modulepath=`pwd`/$(NAME) --noop tests/init.pp
+	for file in $(TEST_FILES); do \
+	  puppet apply --modulepath=`pwd`/$(NAME) --noop $$file || exit 1; \
+	done
 
 # FIXME: document then remove the no-documentation-check
 check: $(NAME)

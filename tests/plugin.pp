@@ -9,7 +9,6 @@
 # Learn more about module testing here:
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
-class { 'vim' :
-  user     => 'vagrant',
-  home_dir => '/home/vagrant',
+vim::plugin { 'nerdtree':
+  source => 'https://github.com/scrooloose/nerdtree.git'
 }
