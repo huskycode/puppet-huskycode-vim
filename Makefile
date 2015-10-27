@@ -15,7 +15,9 @@ check: $(NAME)
 $(NAME):
 	ln -sf . $(NAME)
 
-dependencies: concat stdlib vcsrepo wget
+DEPENDENCIES = concat stdlib vcsrepo wget
+
+dependencies: $(DEPENDENCIES)
 
 concat:
 	git clone git@github.com:puppetlabs/puppet-concat.git concat
@@ -28,3 +30,8 @@ vcsrepo:
 
 wget:
 	git clone git@github.com:maestrodev/puppet-wget.git wget
+
+
+clean:
+	rm $(NAME)
+	rm -rf $(DEPENDENCIES)
