@@ -1,2 +1,7 @@
 pkg/
 vim
+
+concat/
+stdlib/
+vcsrepo/
+wget/

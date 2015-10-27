@@ -2,7 +2,7 @@ NAME=vim
 
 TEST_FILES = $(wildcard tests/*.pp)
 
-test: $(NAME)
+test: $(NAME) dependencies
 	for file in $(TEST_FILES); do \
 	  puppet apply --modulepath=`pwd`/$(NAME) --noop $$file || exit 1; \
 	done
@@ -14,3 +14,17 @@ check: $(NAME)
 # do an ugly symlink so we can rely on the name being known
 $(NAME):
 	ln -sf . $(NAME)
+
+dependencies: concat stdlib vcsrepo wget
+
+concat:
+	git clone git@github.com:puppetlabs/puppet-concat.git concat
+
+stdlib:
+	git clone git@github.com:puppetlabs/puppetlabs-stdlib.git stdlib
+
+vcsrepo:
+	git clone git@github.com:puppetlabs/puppetlabs-vcsrepo.git vcsrepo
+
+wget:
+	git clone git@github.com:maestrodev/puppet-wget.git wget
