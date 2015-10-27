@@ -8,7 +8,7 @@ define vim::rc ($content='')
   }
 
   concat::fragment { "vimrc-${name}":
-    target    => 'vimrc',
-    content   => "${real_content}\n",
+    target  => 'vimrc',
+    content => "${real_content}\n",
   }
 }
