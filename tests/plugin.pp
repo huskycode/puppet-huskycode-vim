@@ -13,3 +13,7 @@ class { 'vim' :
   user     => 'vagrant',
   home_dir => '/home/vagrant',
 }
+
+vim::plugin { 'nerdtree':
+  source => 'https://github.com/scrooloose/nerdtree.git'
+}
