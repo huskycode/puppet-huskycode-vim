@@ -66,8 +66,6 @@ class vim($user, $home_dir) {
 
   vim::rc { 'syntax on': }
   vim::rc { 'filetype plugin indent on': }
-  vim::rc { 'highlight comment ctermfg=darkgray': }
-  vim::rc { ':set bg=dark': }
 
   Package['vim']
   -> File[
