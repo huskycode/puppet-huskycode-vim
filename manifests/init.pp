@@ -1,7 +1,14 @@
-class vim($user, $home_dir) {
+class vim(
+  $user = undef,
+  $group = $user,
+  $mode = '0640',
+  $home_dir = undef,
+) {
   include wget
 
   validate_string($user)
+  validate_string($group)
+  validate_string($mode)
   validate_absolute_path($home_dir)
 
   case $::osfamily {
@@ -14,17 +21,21 @@ class vim($user, $home_dir) {
     name   => $vim_package,
   }
 
+  File {
+    owner  => $user,
+    group  => $group,
+    mode   => $mode,
+  }
+
   file { [
     "${home_dir}/.vim",
     "${home_dir}/.vim/autoload",
     "${home_dir}/.vim/bundle",
     ] :
     ensure => 'directory',
-    owner  => $user,
   }
 
   file { "${home_dir}/.vimrc.local" :
-    owner   => $user,
     replace => false,
     content => "\"Add here your custom options for vim, puppet will not override them\n",
   }
@@ -36,14 +47,10 @@ class vim($user, $home_dir) {
   }
 
   file { "${home_dir}/.vim/autoload/pathogen.vim":
-    owner => $user
   }
 
   concat { 'vimrc':
     path  => "${home_dir}/.vimrc",
-    owner => $user,
-    group => 'root',
-    mode  => '0664',
   }
 
   Concat::Fragment {
