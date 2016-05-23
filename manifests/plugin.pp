@@ -12,7 +12,8 @@ define vim::plugin ($source, $ensure=present) {
     }
   } else {
     file { "${vim::home_dir}/.vim/bundle/${name}":
-      ensure => absent
+      ensure => absent,
+      force  => true,
     }
   }
 }
